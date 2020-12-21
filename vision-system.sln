@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "vision-system-python", "vision-system-python\vision-system-python.pyproj", "{12C2E7BE-E766-4EFD-9787-BAD1C71F3165}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vision-system", "vision-system\vision-system.vcxproj", "{48E2BE11-3007-408D-B96D-1B657B417E13}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "qr-locate-python", "qr-locate-python\qr-locate-python.pyproj", "{AF384B43-9884-4C17-A7EC-35661C3CC37F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vision-system-template", "vision-system-template\vision-system-template.vcxproj", "{F0B7AB97-015B-4078-958B-9B80FBA15A6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +27,32 @@ Global
 		{12C2E7BE-E766-4EFD-9787-BAD1C71F3165}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12C2E7BE-E766-4EFD-9787-BAD1C71F3165}.Release|x64.ActiveCfg = Release|Any CPU
 		{12C2E7BE-E766-4EFD-9787-BAD1C71F3165}.Release|x86.ActiveCfg = Release|Any CPU
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Debug|x64.ActiveCfg = Debug|x64
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Debug|x64.Build.0 = Debug|x64
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Debug|x86.ActiveCfg = Debug|Win32
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Debug|x86.Build.0 = Debug|Win32
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Release|Any CPU.ActiveCfg = Release|Win32
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Release|x64.ActiveCfg = Release|x64
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Release|x64.Build.0 = Release|x64
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Release|x86.ActiveCfg = Release|Win32
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Release|x86.Build.0 = Release|Win32
+		{AF384B43-9884-4C17-A7EC-35661C3CC37F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF384B43-9884-4C17-A7EC-35661C3CC37F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AF384B43-9884-4C17-A7EC-35661C3CC37F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AF384B43-9884-4C17-A7EC-35661C3CC37F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF384B43-9884-4C17-A7EC-35661C3CC37F}.Release|x64.ActiveCfg = Release|Any CPU
+		{AF384B43-9884-4C17-A7EC-35661C3CC37F}.Release|x86.ActiveCfg = Release|Any CPU
+		{F0B7AB97-015B-4078-958B-9B80FBA15A6E}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{F0B7AB97-015B-4078-958B-9B80FBA15A6E}.Debug|x64.ActiveCfg = Debug|x64
+		{F0B7AB97-015B-4078-958B-9B80FBA15A6E}.Debug|x64.Build.0 = Debug|x64
+		{F0B7AB97-015B-4078-958B-9B80FBA15A6E}.Debug|x86.ActiveCfg = Debug|Win32
+		{F0B7AB97-015B-4078-958B-9B80FBA15A6E}.Debug|x86.Build.0 = Debug|Win32
+		{F0B7AB97-015B-4078-958B-9B80FBA15A6E}.Release|Any CPU.ActiveCfg = Release|Win32
+		{F0B7AB97-015B-4078-958B-9B80FBA15A6E}.Release|x64.ActiveCfg = Release|x64
+		{F0B7AB97-015B-4078-958B-9B80FBA15A6E}.Release|x64.Build.0 = Release|x64
+		{F0B7AB97-015B-4078-958B-9B80FBA15A6E}.Release|x86.ActiveCfg = Release|Win32
+		{F0B7AB97-015B-4078-958B-9B80FBA15A6E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

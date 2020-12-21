@@ -35,12 +35,15 @@ Frame::Frame(int im) {
 	drawIm();
 
 	// Display:
-	cout << "Im: " << getIm() << ", ImGray: " << getImGray() << ", ImThres: " << getImThres() << ", ImDrawn: " << getImDrawn() << ", numMarkers: " << numMarkers << endl;
+	cout << "----------------------------------------------------------------------------------------------" << endl;
+	cout << "Im: " << getIm() << ",\tImGray: " << getImGray() << ",\tImThres: " << getImThres() << ",\tImDrawn: " << getImDrawn() << ",\tnumMarkers: " << numMarkers << endl;
+	cout << endl;
 	cout << "VecPoi: ";
-	std::copy(VecPoi.begin(), VecPoi.end(), std::ostream_iterator<int>(std::cout, " "));
+	std::copy(VecPoi.begin(), VecPoi.end(), std::ostream_iterator<int>(std::cout, " ")); // This line wastes sooo much time
+	cout << endl;
 	cout << endl;
 	cout << "VecAnchor: ";
-	std::copy(VecAnchor.begin(), VecAnchor.end(), std::ostream_iterator<int>(std::cout, " "));
+	std::copy(VecAnchor.begin(), VecAnchor.end(), std::ostream_iterator<int>(std::cout, " ")); // This line wastes just as much time
 	cout << endl;
 }
 

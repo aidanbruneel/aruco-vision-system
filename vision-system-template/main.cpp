@@ -108,10 +108,14 @@ private:
 */
 
 int main() {
-	
+	int i = 1;
+	int j = 1;
 	while (1) {
-		int frameCap = 1;
+		int frameCap = i;
 		Frame currentFrame(frameCap);
+		i++;
+		j++;
+		if (!(j%(i+69))) i = i / 2;
 	}
 	return 69;
 }
