@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Anchor.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Marker.h" />
     <ClInclude Include="Poi.h" />

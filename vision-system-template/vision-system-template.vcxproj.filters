@@ -18,9 +18,6 @@
     <ClInclude Include="Marker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Anchor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Poi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
