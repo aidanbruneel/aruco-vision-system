@@ -65,5 +65,6 @@ private:
 	vector<vector<Point2f>> singleMarkerCorners, singleMarkerRejects;
 	vector<Vec3d> rVecs, tVecs;
 	vector<Mat> R;
+	vector<Vec3d> PYR;
 	vector<double> euclidianDistances;
 };
