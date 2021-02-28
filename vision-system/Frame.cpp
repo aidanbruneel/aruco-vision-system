@@ -17,9 +17,18 @@ Frame::Frame(Mat im)
 void Frame::scanSingleMarkers(Mat im)
 {
 	Ptr<aruco::Dictionary> markerDictionary = aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME::DICT_4X4_50);
-	aruco::detectMarkers(im, markerDictionary, singleMarkerCorners, singleMarkerIDs);
+	Ptr<aruco::DetectorParameters> detectParams = aruco::DetectorParameters::create();
+	aruco::detectMarkers(im, markerDictionary, singleMarkerCorners, singleMarkerIDs, detectParams, singleMarkerRejects, cameraIntrinsics, distortionCoeffs);
 	aruco::drawDetectedMarkers(imScan, singleMarkerCorners, singleMarkerIDs);
 	aruco::estimatePoseSingleMarkers(singleMarkerCorners, singleMarkerSideLength, cameraIntrinsics, distortionCoeffs, rVecs, tVecs);
+	
+	Mat Ri = Mat::zeros(Size(3, 3), CV_16F);
+	for (int i = 0; i < singleMarkerIDs.size(); i++)
+	{
+		Rodrigues(rVecs[i], Ri);
+		R.push_back(Ri);
+	}
+	
 	computeEuclidianDistances();
 }
 
@@ -35,6 +44,7 @@ void Frame::displayPose()
 		aruco::drawAxis(imPose, cameraIntrinsics, distortionCoeffs, rVecs[i], tVecs[i], 0.1f);
 		cout << " ID = " << singleMarkerIDs[i] << endl;
 		cout << " Rot Vec   = " << rVecs[i] << endl;
+		cout << " R         = " << endl << R[i] << endl;
 		cout << " Trans Vec = " << tVecs[i] << endl;
 		cout << " Euclidian = " << euclidianDistances[i] << endl;
 		cout << "--------------------------------------------------" << endl;

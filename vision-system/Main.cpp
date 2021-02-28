@@ -15,7 +15,7 @@ using namespace std;
 using namespace cv;
 
 // Global Variables:
-const float singleMarkerSideLength = 0.1895f; //meters
+const float singleMarkerSideLength = 0.15f; //meters
 Mat cameraIntrinsics = Mat::eye(3, 3, CV_64F);
 Mat distortionCoeffs;
 
@@ -77,6 +77,31 @@ bool loadCameraCalibration(string name, Mat& cameraIntrinsics, Mat& distortionCo
 	return false;
 }
 
+void createArucoMarkers(Ptr<aruco::Dictionary> markerDictionary = aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME::DICT_4X4_1000))
+{
+	Mat outputMarker;
+
+	for (int i = 0; i < 1024; i++)
+	{
+		aruco::drawMarker(markerDictionary, i, 1000, outputMarker, 1);
+		ostringstream convert;
+		string imageName = "ARUCO_ORIGINAL_";
+		convert << imageName << i << ".png";
+		imwrite(convert.str(), outputMarker);
+	}
+}
+
+// POPULATE DICTIONARY
+/*
+int main()
+{
+	Ptr<aruco::Dictionary> markerDictionary = aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME::DICT_ARUCO_ORIGINAL);
+	createArucoMarkers(markerDictionary);
+}
+*/
+
+// RUN VISION SYSTEM
+
 int main()
 {
 	// Open VideoCapture device:
@@ -90,7 +115,7 @@ int main()
 	// Open Windows:
 	namedWindow("imCap", WINDOW_AUTOSIZE);
 	namedWindow("imGray", WINDOW_AUTOSIZE);
-	namedWindow("imBW", WINDOW_AUTOSIZE);
+	//namedWindow("imBW", WINDOW_AUTOSIZE);
 	namedWindow("imScan", WINDOW_AUTOSIZE);
 	namedWindow("imPose", WINDOW_AUTOSIZE);
 	
@@ -112,7 +137,7 @@ int main()
 		// Display to Windows:
 		imshow("imCap", currentFrame.getImCap());
 		imshow("imGray", currentFrame.getImGray());
-		imshow("imBW", currentFrame.getImBW());
+		//imshow("imBW", currentFrame.getImBW());
 		imshow("imScan", currentFrame.getImScan());
 		imshow("imPose", currentFrame.getImPose());
 		
@@ -122,3 +147,4 @@ int main()
 	
 	return 1;
 }
+

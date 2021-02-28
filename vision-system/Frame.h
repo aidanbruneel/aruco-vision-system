@@ -64,5 +64,6 @@ private:
 	vector<int> singleMarkerIDs;
 	vector<vector<Point2f>> singleMarkerCorners, singleMarkerRejects;
 	vector<Vec3d> rVecs, tVecs;
-	vector<float> euclidianDistances;
+	vector<Mat> R;
+	vector<double> euclidianDistances;
 };
