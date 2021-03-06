@@ -92,17 +92,6 @@ void createArucoMarkers(Ptr<aruco::Dictionary> markerDictionary = aruco::getPred
 	}
 }
 
-// POPULATE DICTIONARY
-/*
-int main()
-{
-	Ptr<aruco::Dictionary> markerDictionary = aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME::DICT_ARUCO_ORIGINAL);
-	createArucoMarkers(markerDictionary);
-}
-*/
-
-// RUN VISION SYSTEM
-
 int main()
 {
 	// Open VideoCapture device:
@@ -148,4 +137,3 @@ int main()
 	
 	return 1;
 }
-

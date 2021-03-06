@@ -14,49 +14,47 @@
 using namespace std;
 using namespace cv;
 
-// create variables for collecting info from frames
+// Create variables for collecting info from frames
 vector<vector<vector<Point2f>>> allCorners, tempCorners;
 vector<vector<int>> allIds, tempIds;
 vector<Mat> allImgs, tempImages;
 Size imgSize;
 
-// settings
+// Calibration Board settings
 int squaresX = 5;
 int squaresY = 7;
-float squareLength = 0.036; //need this from the user
-float markerLength = 0.021; //also this
+double squareLength = 0.036; //need this from the user
+double markerLength = 0.021; //also this
 int dictionaryId = 10;
+
+// Calibration program settings
 string outputFile = "CharCaliOut";
-
 bool showChessboardCorners = true;
-
 int calibrationFlags = 0, totalImageCollect=60;
 float aspectRatio = 1;
 
-// create aruco params
+// Create ArUco parameters
 Ptr<aruco::DetectorParameters> detectorParams = aruco::DetectorParameters::create();
-Ptr<aruco::Dictionary> dictionary =
-aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME(dictionaryId));
-Ptr<aruco::CharucoBoard> charucoboard =
-aruco::CharucoBoard::create(squaresX, squaresY, squareLength, markerLength, dictionary);
+Ptr<aruco::Dictionary> dictionary = aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME(dictionaryId));
+Ptr<aruco::CharucoBoard> charucoboard = aruco::CharucoBoard::create(squaresX, squaresY, squareLength, markerLength, dictionary);
 Ptr<aruco::Board> board = charucoboard.staticCast<aruco::Board>();
 
-Mat cameraMatrix, distCoeffs;
+Mat cameraIntrinsics, distortionCoeffs;
 vector<Mat> rvecs, tvecs;
 
 vector<Mat> allCharucoCorners;
 vector<Mat> allCharucoIds;
 vector<Mat> filteredImages;
 
-
-bool saveCameraCalibration(string name, Mat cameraMatrix, Mat distanceCoeffs)
+// saveCameraCalibration() function for saving calibrated camera intrinsics and distortion coefficients to a readable file
+bool saveCameraCalibration(string name, Mat cameraIntrinsics, Mat distortionCoeffs)
 {
     cout << "Writing Calibration File..." << endl;
     ofstream outStream(name);
     if (outStream)
     {
-        uint16_t rows = cameraMatrix.rows;
-        uint16_t columns = cameraMatrix.cols;
+        uint16_t rows = cameraIntrinsics.rows;
+        uint16_t columns = cameraIntrinsics.cols;
 
         outStream << rows << endl;
         outStream << columns << endl;
@@ -65,13 +63,13 @@ bool saveCameraCalibration(string name, Mat cameraMatrix, Mat distanceCoeffs)
         {
             for (int c = 0; c < columns; c++)
             {
-                double value = cameraMatrix.at<double>(r, c);
+                double value = cameraIntrinsics.at<double>(r, c);
                 outStream << value << endl;
             }
         }
 
-        rows = distanceCoeffs.rows;
-        columns = distanceCoeffs.cols;
+        rows = distortionCoeffs.rows;
+        columns = distortionCoeffs.cols;
 
         outStream << rows << endl;
         outStream << columns << endl;
@@ -80,7 +78,7 @@ bool saveCameraCalibration(string name, Mat cameraMatrix, Mat distanceCoeffs)
         {
             for (int c = 0; c < columns; c++)
             {
-                double value = distanceCoeffs.at<double>(r, c);
+                double value = distortionCoeffs.at<double>(r, c);
                 outStream << value << endl;
             }
         }
@@ -94,7 +92,9 @@ bool saveCameraCalibration(string name, Mat cameraMatrix, Mat distanceCoeffs)
     return false;
 }
 
-bool collectImages(VideoCapture vid, int framesPerSecond, int imageCollect, int numMin) {
+// collectImages() function for automatically capturing images when sufficient corners of calibration board are detected
+bool collectImages(VideoCapture vid, int framesPerSecond, int imageCollect, int numMin)
+{
     for (int i = 0; i < (framesPerSecond * numMin * 60); i++) {
         //int everyOther = floor((framesPerSecond * numMin * 60) / imageCollect);
         int everyOther = 8;
@@ -104,19 +104,19 @@ bool collectImages(VideoCapture vid, int framesPerSecond, int imageCollect, int 
         if (!vid.read(image))
             break;
 
-        vector< int > ids;
-        vector< vector< Point2f > > corners, rejected;
+        vector<int> ids;
+        vector< vector<Point2f>> corners, rejected;
 
-        // detect markers
+        // Detect markers
         aruco::detectMarkers(image, dictionary, corners, ids, detectorParams, rejected);
 
-        // interpolate charuco corners
+        // Interpolate charuco corners
         Mat currentCharucoCorners, currentCharucoIds;
         if (ids.size() > 0)
             aruco::interpolateCornersCharuco(corners, ids, image, charucoboard, currentCharucoCorners,
                 currentCharucoIds);
 
-        // draw results
+        // Draw detected markers
         image.copyTo(imageCopy);
         if (ids.size() > 0) aruco::drawDetectedMarkers(imageCopy, corners);
 
@@ -136,7 +136,7 @@ bool collectImages(VideoCapture vid, int framesPerSecond, int imageCollect, int 
             return 0;
             break;
         default:
-            //automatically collect images
+            // Automatically collect images
             if (!(i%everyOther) && ids.size() > 0 && currentCharucoCorners.total()>4) {
                 tempCorners.push_back(corners);
                 tempIds.push_back(ids);
@@ -190,10 +190,12 @@ bool collectImages(VideoCapture vid, int framesPerSecond, int imageCollect, int 
     
 }
 
-bool completeCalibration() {
+// Function for converting collected images and calibration board points into 
+bool completeCalibration()
+{
+    // Initialize calibration variables
     bool CaliSuccess, saveOk;
 
-    // prepare data for calibration
     vector<vector<Point2f>> allCornersConcatenated;
     vector<int> allIdsConcatenated;
     vector<int> markerCounterPerFrame;
@@ -212,11 +214,9 @@ bool completeCalibration() {
     allCharucoIds.reserve(nFrames);
 
     for (int i = 0; i < nFrames; i++) {
-        // interpolate using camera parameters
+        // Interpolate using camera parameters
         Mat currentCharucoCorners, currentCharucoIds;
-        aruco::interpolateCornersCharuco(allCorners[i], allIds[i], allImgs[i], charucoboard,
-            currentCharucoCorners, currentCharucoIds, cameraMatrix,
-            distCoeffs);
+        aruco::interpolateCornersCharuco(allCorners[i], allIds[i], allImgs[i], charucoboard, currentCharucoCorners, currentCharucoIds, cameraIntrinsics, distortionCoeffs);
 
         allCharucoCorners.push_back(currentCharucoCorners);
         allCharucoIds.push_back(currentCharucoIds);
@@ -228,13 +228,13 @@ bool completeCalibration() {
         return 0;
     }
 
-    // calibrate camera using charuco
-    CaliSuccess = aruco::calibrateCameraCharuco(allCharucoCorners, allCharucoIds, charucoboard, imgSize,
-        cameraMatrix, distCoeffs, rvecs, tvecs, calibrationFlags);
+    // Calibrate camera using charuco
+    CaliSuccess = aruco::calibrateCameraCharuco(allCharucoCorners, allCharucoIds, charucoboard, imgSize, cameraIntrinsics, distortionCoeffs, rvecs, tvecs, calibrationFlags);
 
+    // Check calibration success and call saveCameraCalibration() if successful to write calibration file
     if (CaliSuccess) {
         cout << "Calibration Successful!" << endl;
-        saveOk = saveCameraCalibration(outputFile, cameraMatrix, distCoeffs);
+        saveOk = saveCameraCalibration(outputFile, cameraIntrinsics, distortionCoeffs);
     }
     else {
         cout << "Calibration Failed!" << endl;
@@ -249,18 +249,21 @@ bool completeCalibration() {
     return CaliSuccess;
 }
 
-int main() {
-    // open video stream
+int main()
+{
+    // Open video capture device
     VideoCapture vid(0);
     if (!vid.isOpened())
     {
         return 0;
     }
-
-    int framesPerSecond = 20, numMin = 1, imageCollect = 10;
     namedWindow("Webcam", WINDOW_AUTOSIZE);
+    
+    // collectImages() settings
+    int framesPerSecond = 20, numMin = 1, imageCollect = 10;
+    
 
-    //begin calibration with board parallel to camera, then four rounds of 45-degree board angles, then final round of assorted angles
+    // Begin calibration phases
     for (int k = 0; k < 7; k++) {
         cout << "Begin phase " << k + 1 << " of calibration. " << endl;
         collectImages(vid, framesPerSecond, imageCollect, numMin);
@@ -268,7 +271,7 @@ int main() {
 
     cout << "Finished Collecting Images!!" << endl;
 
-    //creates the calibration file
+    // Call completeCalibration() function to calculate camera's intrinsic parameters
     completeCalibration();
 
 	return 0;

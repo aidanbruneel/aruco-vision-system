@@ -21,7 +21,7 @@ extern Mat distortionCoeffs;
 class Frame
 {
 public:
-	Frame(Mat im);
+	Frame(Mat im, Ptr<aruco::Dictionary> dictionary = aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME::DICT_4X4_50));
 
 	// Getters:
 	Mat getImCap()
@@ -44,6 +44,18 @@ public:
 	{
 		return imPose;
 	}
+	double getPitch(int i)
+	{
+		return -PYR[i][0];
+	}
+	double getYaw(int i)
+	{
+		return -PYR[i][1];
+	}
+	double getRoll(int i)
+	{
+		return -PYR[i][2];
+	}
 
 private:
 	// Member Functions:
@@ -61,6 +73,7 @@ private:
 	Mat imPose;
 	
 	// Marker Information:
+	Ptr<aruco::Dictionary> markerDictionary;
 	vector<int> singleMarkerIDs;
 	vector<vector<Point2f>> singleMarkerCorners, singleMarkerRejects;
 	vector<Vec3d> rVecs, tVecs;

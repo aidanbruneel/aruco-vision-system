@@ -3,14 +3,18 @@
 using namespace std;
 using namespace cv;
 
-Frame::Frame(Mat im)
+Frame::Frame(Mat im, Ptr<aruco::Dictionary> dictionary)
 {
+	markerDictionary = dictionary;
+	// Image Processing
 	imCap = im;
 	cvtColor(im, imGray, COLOR_BGR2GRAY);
 	//adaptiveThreshold(imGray, imBW, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 11, 2);
 	cvtColor(imGray, imScan, COLOR_GRAY2BGR);
 	cvtColor(imGray, imPose, COLOR_GRAY2BGR);
+	// Scan grayscale image for ArUco single markers and perform Pose Estimation on any detected markers
 	scanSingleMarkers(imGray);
+	// Display Pose Estimation data and draw marker axes
 	displayPose();
 }
 
@@ -22,6 +26,7 @@ void Frame::scanSingleMarkers(Mat im)
 	aruco::drawDetectedMarkers(imScan, singleMarkerCorners, singleMarkerIDs);
 	aruco::estimatePoseSingleMarkers(singleMarkerCorners, singleMarkerSideLength, cameraIntrinsics, distortionCoeffs, rVecs, tVecs);
 	
+	// Convert Axis-Angle representation of pose to Rodrigues Rotation Matrix, then perform RQ Decomposition to obtain Pitch, Yaw, and Roll
 	Mat Ri = Mat::zeros(Size(3, 3), CV_16F);
 	Vec3d PYRi;
 	Mat mtxR = Mat::zeros(Size(3, 3), CV_16F);
@@ -34,6 +39,7 @@ void Frame::scanSingleMarkers(Mat im)
 		PYR.push_back(PYRi);
 	}
 	
+	// Calculate Euclidian distance from Translation Vector
 	computeEuclidianDistances();
 }
 
@@ -46,15 +52,15 @@ void Frame::displayPose()
 	// Display Pose Estimation Values and Axes
 	for (int i = 0; i < singleMarkerIDs.size(); i++)
 	{
-		aruco::drawAxis(imPose, cameraIntrinsics, distortionCoeffs, rVecs[i], tVecs[i], 0.1f);
+		aruco::drawAxis(imPose, cameraIntrinsics, distortionCoeffs, rVecs[i], tVecs[i], 0.07f);
 		cout << " ID = " << singleMarkerIDs[i] << endl;
 		cout << " Rot Vec   = " << rVecs[i] << endl;
 		cout << " Trans Vec = " << tVecs[i] << endl;
 		cout << " Euclidian = " << euclidianDistances[i] << endl;
 		cout << " Rot Matrix:" << endl << R[i] << endl;
-		cout << " Pitch = " << -PYR[i][0] << endl;
-		cout << " Yaw   = " << -PYR[i][1] << endl;
-		cout << " Roll  = " << -PYR[i][2] << endl;
+		cout << " Pitch = " << getPitch(i) << endl;
+		cout << " Yaw   = " << getYaw(i) << endl;
+		cout << " Roll  = " << getRoll(i) << endl;
 		cout << "--------------------------------------------------" << endl;
 	}
 }
