@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vision-system", "vision-system\vision-system.vcxproj", "{48E2BE11-3007-408D-B96D-1B657B417E13}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "camera-calibration", "camera-calibration\camera-calibration.vcxproj", "{9940B740-CB79-4F7B-9AF1-36A11AF37787}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "create-markers", "create-markers\create-markers.vcxproj", "{ACE15C0A-BE39-4709-911D-551079A7A44A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Debug|x64.ActiveCfg = Debug|x64
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Debug|x64.Build.0 = Debug|x64
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Debug|x86.ActiveCfg = Debug|Win32
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Debug|x86.Build.0 = Debug|Win32
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Release|Any CPU.ActiveCfg = Release|Win32
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Release|x64.ActiveCfg = Release|x64
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Release|x64.Build.0 = Release|x64
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Release|x86.ActiveCfg = Release|Win32
+		{48E2BE11-3007-408D-B96D-1B657B417E13}.Release|x86.Build.0 = Release|Win32
+		{9940B740-CB79-4F7B-9AF1-36A11AF37787}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{9940B740-CB79-4F7B-9AF1-36A11AF37787}.Debug|x64.ActiveCfg = Debug|x64
+		{9940B740-CB79-4F7B-9AF1-36A11AF37787}.Debug|x64.Build.0 = Debug|x64
+		{9940B740-CB79-4F7B-9AF1-36A11AF37787}.Debug|x86.ActiveCfg = Debug|Win32
+		{9940B740-CB79-4F7B-9AF1-36A11AF37787}.Debug|x86.Build.0 = Debug|Win32
+		{9940B740-CB79-4F7B-9AF1-36A11AF37787}.Release|Any CPU.ActiveCfg = Release|Win32
+		{9940B740-CB79-4F7B-9AF1-36A11AF37787}.Release|x64.ActiveCfg = Release|x64
+		{9940B740-CB79-4F7B-9AF1-36A11AF37787}.Release|x64.Build.0 = Release|x64
+		{9940B740-CB79-4F7B-9AF1-36A11AF37787}.Release|x86.ActiveCfg = Release|Win32
+		{9940B740-CB79-4F7B-9AF1-36A11AF37787}.Release|x86.Build.0 = Release|Win32
+		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Debug|x64.ActiveCfg = Debug|x64
+		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Debug|x64.Build.0 = Debug|x64
+		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Debug|x86.ActiveCfg = Debug|Win32
+		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Debug|x86.Build.0 = Debug|Win32
+		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Release|Any CPU.ActiveCfg = Release|Win32
+		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Release|x64.ActiveCfg = Release|x64
+		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Release|x64.Build.0 = Release|x64
+		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Release|x86.ActiveCfg = Release|Win32
+		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CA4BFDE2-F9A2-4824-A1CF-AA3A73C5A907}
+	EndGlobalSection
+EndGlobal
