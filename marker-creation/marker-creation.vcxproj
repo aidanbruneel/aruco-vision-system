@@ -24,7 +24,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{ace15c0a-be39-4709-911d-551079a7a44a}</ProjectGuid>
+    <ProjectGuid>{5AAADCCF-2808-4FDC-BC8A-24AC1E43BD9A}</ProjectGuid>
     <RootNamespace>create_markers</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>

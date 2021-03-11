@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vision-system", "vision-sys
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "camera-calibration", "camera-calibration\camera-calibration.vcxproj", "{9940B740-CB79-4F7B-9AF1-36A11AF37787}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "create-markers", "create-markers\create-markers.vcxproj", "{ACE15C0A-BE39-4709-911D-551079A7A44A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "marker-creation", "marker-creation\marker-creation.vcxproj", "{5AAADCCF-2808-4FDC-BC8A-24AC1E43BD9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,16 +39,16 @@ Global
 		{9940B740-CB79-4F7B-9AF1-36A11AF37787}.Release|x64.Build.0 = Release|x64
 		{9940B740-CB79-4F7B-9AF1-36A11AF37787}.Release|x86.ActiveCfg = Release|Win32
 		{9940B740-CB79-4F7B-9AF1-36A11AF37787}.Release|x86.Build.0 = Release|Win32
-		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Debug|x64.ActiveCfg = Debug|x64
-		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Debug|x64.Build.0 = Debug|x64
-		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Debug|x86.ActiveCfg = Debug|Win32
-		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Debug|x86.Build.0 = Debug|Win32
-		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Release|Any CPU.ActiveCfg = Release|Win32
-		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Release|x64.ActiveCfg = Release|x64
-		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Release|x64.Build.0 = Release|x64
-		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Release|x86.ActiveCfg = Release|Win32
-		{ACE15C0A-BE39-4709-911D-551079A7A44A}.Release|x86.Build.0 = Release|Win32
+		{5AAADCCF-2808-4FDC-BC8A-24AC1E43BD9A}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{5AAADCCF-2808-4FDC-BC8A-24AC1E43BD9A}.Debug|x64.ActiveCfg = Debug|x64
+		{5AAADCCF-2808-4FDC-BC8A-24AC1E43BD9A}.Debug|x64.Build.0 = Debug|x64
+		{5AAADCCF-2808-4FDC-BC8A-24AC1E43BD9A}.Debug|x86.ActiveCfg = Debug|Win32
+		{5AAADCCF-2808-4FDC-BC8A-24AC1E43BD9A}.Debug|x86.Build.0 = Debug|Win32
+		{5AAADCCF-2808-4FDC-BC8A-24AC1E43BD9A}.Release|Any CPU.ActiveCfg = Release|Win32
+		{5AAADCCF-2808-4FDC-BC8A-24AC1E43BD9A}.Release|x64.ActiveCfg = Release|x64
+		{5AAADCCF-2808-4FDC-BC8A-24AC1E43BD9A}.Release|x64.Build.0 = Release|x64
+		{5AAADCCF-2808-4FDC-BC8A-24AC1E43BD9A}.Release|x86.ActiveCfg = Release|Win32
+		{5AAADCCF-2808-4FDC-BC8A-24AC1E43BD9A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
