@@ -1,17 +1,3 @@
-/*
-#include "opencv2/core.hpp"
-#include "opencv2/imgcodecs.hpp"
-#include "opencv2/imgproc.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/aruco.hpp"
-#include "opencv2/calib3d.hpp"
-
-#include <sstream>
-#include <iostream>
-#include <fstream>
-#include <math.h>
-*/
-
 #include "Frame.h"
 
 using namespace std;
@@ -84,52 +70,6 @@ bool loadCameraCalibration(string name, Mat& cameraIntrinsics, Mat& distortionCo
 
 	return false;
 }
-
-void createArucoMarkers(Ptr<aruco::Dictionary> markerDictionary = aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME::DICT_4X4_1000))
-{
-	Mat outputMarker;
-
-	for (int i = 0; i < 1024; i++)
-	{
-		aruco::drawMarker(markerDictionary, i, 1000, outputMarker, 1);
-		ostringstream convert;
-		string imageName = "ARUCO_ORIGINAL_";
-		convert << imageName << i << ".png";
-		imwrite(convert.str(), outputMarker);
-	}
-}
-
-void createDiamondMarkers(Ptr<aruco::Dictionary> markerDictionary = aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME::DICT_4X4_50))
-{
-	Mat outputMarker;
-
-	Vec4i currentIDs;
-	int dictionarySize = 50;
-	int i, j, k, l;
-
-	for (i = 0; i < dictionarySize; i+=5)
-	{
-		for (j = 0; j < dictionarySize; j+=5)
-		{
-			for (k = 0; k < dictionarySize; k+=5)
-			{
-				for (l = 0; l < dictionarySize; l+=5)
-				{
-					i++;
-					currentIDs = Vec4i(i, j, k, l);
-					aruco::drawCharucoDiamond(markerDictionary, currentIDs, 1000, 540, outputMarker);
-					ostringstream convert;
-					string imageName = "4X4_50_DIAMOND_";
-					convert << imageName << i << "_" << j << "_" << k << "_" << l << ".png";
-					imwrite(convert.str(), outputMarker);
-
-				}
-			}
-		}
-
-	}
-}
-
 
 int main()
 {
