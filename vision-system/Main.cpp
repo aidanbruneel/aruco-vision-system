@@ -74,7 +74,7 @@ bool loadCameraCalibration(string name, Mat& cameraIntrinsics, Mat& distortionCo
 int main()
 {
 	// Open VideoCapture device:
-	VideoCapture cap(0);
+	VideoCapture cap(1);
 	if (!cap.isOpened())
 	{
 		cout << "Error: Camera already opened." << endl;
