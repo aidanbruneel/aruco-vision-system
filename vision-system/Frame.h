@@ -10,6 +10,8 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include <iomanip>
+#include <string>
 #include <math.h>
 
 using namespace std;
@@ -54,18 +56,6 @@ public:
 	{
 		return imPose;
 	}
-	double getPitch(int i)
-	{
-		return -PYR[i][0];
-	}
-	double getYaw(int i)
-	{
-		return -PYR[i][1];
-	}
-	double getRoll(int i)
-	{
-		return -PYR[i][2];
-	}
 
 private:
 	// Member Functions:
@@ -74,6 +64,9 @@ private:
 	void displayPose();
 
 	void computeEuclidianDistances();
+	void computeGuidanceAngles();
+	void writeDataPackets(double dist, double ang);
+	void printMat(Mat mat, int precision);
 	
 	// Images:
 	Mat imCap;
@@ -89,7 +82,11 @@ private:
 	vector<Vec4i> diamondMarkerIDs;
 	vector<vector<Point2f>> singleMarkerCorners, singleMarkerRejects, diamondMarkerCorners, diamondMarkerRejects;
 	vector<Vec3d> rVecs, tVecs, rVecsDiamond, tVecsDiamond;
-	vector<Mat> R, RDiamond;
-	vector<Vec3d> PYR, PYRDiamond;
-	vector<double> euclidianDistances, euclideanDistancesDiamond;
+	vector<Mat> Rcm, Rmc, Tcm, Tmc, RDiamond;
+	vector<Vec3d> PYRcm, PYRmc, PYRDiamond;
+	vector<double> euclidianDistances, euclideanDistancesDiamond, guidanceAngles;
+	
+	vector<Vec2d> Zd, Zc;
+	vector<string> dataPackets;
+
 };

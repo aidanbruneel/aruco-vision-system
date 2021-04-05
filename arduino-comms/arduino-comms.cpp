@@ -7,31 +7,16 @@ using namespace System::IO::Ports;
 
 int main(array<System::String ^> ^args)
 {
-    SerialPort port("COM3", 250000);
+    SerialPort port("COM3", 9600);
     port.Open();
     while (1)
     {
-        std::cout << "Enter Int: " << std::endl;
-        int input = Convert::ToInt32(Console::ReadLine());
+        std::cout << "Enter String: " << std::endl;
+        String^ input = Convert::ToString(Console::ReadLine());
         std::cout << std::endl;
-
-        char* str;
-        String^ cliStr;
-        if (input == 1)
-        {
-            str = "AAAAAAAA";
-            cliStr = gcnew String(str);
-        }
-        else
-        {
-            str = "BB";
-            cliStr = gcnew String(str);
-        }
-        port.Write(cliStr);
+        port.Write(input);
 
     }
     port.Close();
     return 0;
 }
-
-// String guidance = "dxxxxxayyf";
