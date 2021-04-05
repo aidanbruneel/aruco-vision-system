@@ -98,6 +98,10 @@ int main()
 	// Initialize Current Capture:
 	Mat currentCap;
 
+	// Open Serial Port for Arduino Communications
+	SerialPort port("COM3", 9600);
+	port.Open();
+
 	while (true)
 	{
 		// if no frame returned from webcam (unable to get info from webcam)
@@ -115,9 +119,22 @@ int main()
 		imshow("imDiamond", currentFrame.getImGray());
 		imshow("imPose", currentFrame.getImPose());
 		
+		if (currentFrame.getNumMarkers() > 0)
+		{
+			cout << "Enter String: " << endl;
+			System::String^ packet = gcnew System::String(currentFrame.getDataPacket(0).c_str());
+			Console::WriteLine(packet);
+			port.Write(packet);
+		}
+		else
+		{
+			port.Write("N/A");
+		}
+
 		// WaitKey:
 		if (waitKey(1) >= 0) break;
 	}
 	
-	return 1;
+	port.Close();
+	return 0;
 }
