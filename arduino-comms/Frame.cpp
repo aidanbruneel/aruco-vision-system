@@ -3,8 +3,9 @@
 using namespace std;
 using namespace cv;
 
-Frame::Frame(Mat im, Ptr<aruco::Dictionary> dictionary)
+Frame::Frame(Mat im, int id, Ptr<aruco::Dictionary> dictionary)
 {
+	relevantID = id;
 	markerDictionary = dictionary;
 	// Image Processing
 	imCap = im;
@@ -21,7 +22,7 @@ Frame::Frame(Mat im, Ptr<aruco::Dictionary> dictionary)
 
 void Frame::scanMarkers(Mat im)
 {
-	Ptr<aruco::Dictionary> markerDictionary = aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME::DICT_4X4_50);
+	//Ptr<aruco::Dictionary> markerDictionary = aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME::DICT_4X4_50);
 	Ptr<aruco::DetectorParameters> detectParams = aruco::DetectorParameters::create();
 	aruco::detectMarkers(im, markerDictionary, singleMarkerCorners, singleMarkerIDs, detectParams, singleMarkerRejects, cameraIntrinsics, distortionCoeffs);
 	aruco::drawDetectedMarkers(imScan, singleMarkerCorners, singleMarkerIDs);
@@ -73,6 +74,10 @@ void Frame::scanMarkers(Mat im)
 	// Calculate Euclidian distance from Translation Vector
 	computeEuclidianDistances();
 	computeGuidanceAngles();
+	for (int i = 0; i < singleMarkerIDs.size(); i++)
+	{
+		writeDataPackets(euclidianDistances[i], guidanceAngles[i]);
+	}
 }
 
 void Frame::displayPose()
@@ -84,30 +89,33 @@ void Frame::displayPose()
 	// Display Pose Estimation Values and Axes
 	for (int i = 0; i < singleMarkerIDs.size(); i++)
 	{
-		aruco::drawAxis(imPose, cameraIntrinsics, distortionCoeffs, rVecs[i], tVecs[i], 0.07f);
-		cout << " ID = " << singleMarkerIDs[i] << endl;
+		if (singleMarkerIDs[i] == relevantID)
+		{
+			aruco::drawAxis(imPose, cameraIntrinsics, distortionCoeffs, rVecs[i], tVecs[i], 0.07f);
+			cout << " ID = " << singleMarkerIDs[i] << endl;
 		
-		//cout << fixed << setprecision(4) << " Rot Vec   = " << rVecs[i] << endl;
-		//cout << fixed << setprecision(4) << " Trans Vec = " << tVecs[i] << endl;
-		cout << fixed << setprecision(4) << " Euclidian = " << euclidianDistances[i] << endl;
+			//cout << fixed << setprecision(4) << " Rot Vec   = " << rVecs[i] << endl;
+			//cout << fixed << setprecision(4) << " Trans Vec = " << tVecs[i] << endl;
+			cout << fixed << setprecision(4) << " Euclidian = " << euclidianDistances[i] << endl;
 		
-		//cout << " Rcm:" << endl;
-		//printMat(Rcm[i], 4);
-		cout << " Tcm:" << endl;
-		printMat(Tcm[i], 4);
-		cout << fixed << setprecision(4) << " PYRcm:" << endl << PYRcm[i] << endl;
+			//cout << " Rcm:" << endl;
+			//printMat(Rcm[i], 4);
+			cout << " Tcm:" << endl;
+			printMat(Tcm[i], 4);
+			cout << fixed << setprecision(4) << " PYRcm:" << endl << PYRcm[i] << endl;
 
-		//cout << " Rmc:" << endl;
-		//printMat(Rmc[i], 4);
-		cout << " Tmc:" << endl;
-		printMat(Tmc[i], 4);
-		cout << fixed << setprecision(4) << " PYRmc:" << endl << PYRmc[i] << endl;
-		//cout << fixed << setprecision(4) << " Zd:" << endl << Zd[i] << endl;
-		//cout << fixed << setprecision(4) << " Zc:" << endl << Zc[i] << endl;
-		cout << fixed << setprecision(4) << " Guidance Angle:" << endl << guidanceAngles[i] << endl;
-		writeDataPackets(euclidianDistances[i], guidanceAngles[i]);
-		cout << " Data Packet:" << endl << dataPackets[i] << endl;
-		cout << "--------------------------------------------------" << endl;
+			//cout << " Rmc:" << endl;
+			//printMat(Rmc[i], 4);
+			cout << " Tmc:" << endl;
+			printMat(Tmc[i], 4);
+			cout << fixed << setprecision(4) << " PYRmc:" << endl << PYRmc[i] << endl;
+			//cout << fixed << setprecision(4) << " Zd:" << endl << Zd[i] << endl;
+			//cout << fixed << setprecision(4) << " Zc:" << endl << Zc[i] << endl;
+			cout << fixed << setprecision(4) << " Guidance Angle:" << endl << guidanceAngles[i] << endl;
+			cout << " Data Packet:" << endl << dataPackets[i] << endl;
+			cout << "--------------------------------------------------" << endl;
+		}
+		
 	}
 }
 

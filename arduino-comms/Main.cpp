@@ -85,11 +85,11 @@ int main()
 	}
 
 	// Open Windows:
-	namedWindow("imCap", WINDOW_AUTOSIZE);
-	namedWindow("imGray", WINDOW_AUTOSIZE);
+	//namedWindow("imCap", WINDOW_AUTOSIZE);
+	//namedWindow("imGray", WINDOW_AUTOSIZE);
 	//namedWindow("imBW", WINDOW_AUTOSIZE);
 	namedWindow("imScan", WINDOW_AUTOSIZE);
-	namedWindow("imDiamond", WINDOW_AUTOSIZE);
+	//namedWindow("imDiamond", WINDOW_AUTOSIZE);
 	namedWindow("imPose", WINDOW_AUTOSIZE);
 	
 	// Load Camera Parameters:
@@ -107,29 +107,24 @@ int main()
 		// if no frame returned from webcam (unable to get info from webcam)
 		if (!cap.read(currentCap))
 			break;
-		
+		int relevantID = 0;
+
 		// Create Frame object:
-		Frame currentFrame(currentCap);
+		Frame currentFrame(currentCap, relevantID);
 
 		// Display to Windows:
-		imshow("imCap", currentFrame.getImCap());
-		imshow("imGray", currentFrame.getImGray());
+		//imshow("imCap", currentFrame.getImCap());
+		//imshow("imGray", currentFrame.getImGray());
 		//imshow("imBW", currentFrame.getImBW());
 		imshow("imScan", currentFrame.getImScan());
-		imshow("imDiamond", currentFrame.getImGray());
+		//imshow("imDiamond", currentFrame.getImGray());
 		imshow("imPose", currentFrame.getImPose());
 		
-		if (currentFrame.getNumMarkers() > 0)
-		{
-			cout << "Enter String: " << endl;
-			System::String^ packet = gcnew System::String(currentFrame.getDataPacket(0).c_str());
-			Console::WriteLine(packet);
-			port.Write(packet);
-		}
-		else
-		{
-			port.Write("N/A");
-		}
+		// Send Data Packet:
+		cout << "Writing to SerialPort: " << endl;
+		System::String^ packet = gcnew System::String(currentFrame.getDataPacket(0).c_str());
+		Console::WriteLine(packet);
+		port.Write(packet);
 
 		// WaitKey:
 		if (waitKey(1) >= 0) break;

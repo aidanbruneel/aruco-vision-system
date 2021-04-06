@@ -14,6 +14,7 @@
 #include <iomanip>
 #include <string>
 #include <math.h>
+#include <algorithm>
 
 using namespace std;
 using namespace cv;
@@ -30,7 +31,7 @@ extern Mat distortionCoeffs;
 class Frame
 {
 public:
-	Frame(Mat im, Ptr<aruco::Dictionary> dictionary = aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME::DICT_4X4_50));
+	Frame(Mat im, int id, Ptr<aruco::Dictionary> dictionary = aruco::getPredefinedDictionary(aruco::PREDEFINED_DICTIONARY_NAME::DICT_4X4_50));
 
 	// Getters:
 	Mat getImCap()
@@ -57,9 +58,19 @@ public:
 	{
 		return imPose;
 	}
-	string getDataPacket(int index)
+	string getDataPacket(int id)
 	{
-		return dataPackets[index];
+		vector<int>::iterator itr = find(singleMarkerIDs.begin(), singleMarkerIDs.end(), id);
+		if (getNumMarkers() > 0 && itr != singleMarkerIDs.cend())
+		{
+			int index = distance(singleMarkerIDs.begin(), itr);
+			return dataPackets[index];
+		}
+		else
+		{
+			string noGuidance = "N/A";
+			return noGuidance;
+		}
 	}
 	int getNumMarkers()
 	{
@@ -98,4 +109,5 @@ private:
 	vector<Vec2d> Zd, Zc;
 	vector<string> dataPackets;
 
+	int relevantID;
 };
